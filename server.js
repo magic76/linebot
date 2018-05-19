@@ -20,7 +20,8 @@ bot.on('message', function (event) {
 const app = express();
 const linebotParser = bot.parser();
 app.post('/linewebhook', linebotParser);
-app.get('/line123', () => {
-  bot.push('', 'test push');
+app.get('/line123', function (req, res) {
+  console.log(req);
+  bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'test push');
 });
 app.listen(process.env.PORT || 3000);
