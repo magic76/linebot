@@ -15,9 +15,9 @@ bot.on('message', function (event) {
   });
 });
 
-bot.listen('/linewebhook', 3000);
+// bot.listen('/linewebhook', 3000);
 
-// const app = express();
-// const linebotParser = bot.parser();
-// app.post('/linewebhook', linebotParser);
-// app.listen(3000);
+const app = express();
+const linebotParser = bot.parser();
+app.post('/linewebhook', linebotParser);
+app.listen(80);
