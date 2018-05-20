@@ -8,10 +8,8 @@ var bot = linebot({
 });
 
 bot.on('message', function (event) {
-  event.reply(event.message.text).then(function (data) {
-    // success
-  }).catch(function (error) {
-    // error
+  event.source.profile().then(function (profile) {
+    return event.reply('Hello ' + profile.displayName + ' ' + profile.userId);
   });
 });
 
