@@ -1,6 +1,6 @@
 const express = require('express');
 var linebot = require('linebot');
-const { parse }: any = require('url');
+const { parse } = require('url');
 
 var bot = linebot({
   channelId: '1581950485',
