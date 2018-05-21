@@ -1,6 +1,7 @@
 const express = require('express');
 var linebot = require('linebot');
 const { parse } = require('url');
+const fetch = require('isomorphic-fetch');
 
 var bot = linebot({
   channelId: '1581950485',
@@ -10,7 +11,10 @@ var bot = linebot({
 
 bot.on('message', function (event) {
   event.source.profile().then(function (profile) {
-    return event.reply('Hello ' + profile.displayName + ' ' + profile.userId);
+    fetch('https://works.ioa.tw/weather/api/weathers/39.json').then(data => data.json()).then((data) => {
+        // return event.reply('Hello ' + profile.displayName + ' ' + profile.userId);
+        return event.reply(data.desc + '_溫度：' + data.temperature + '度_濕度：' + data.humidity + '_');
+    });
   });
 });
 
@@ -18,20 +22,16 @@ bot.on('message', function (event) {
 bot.on('join', function (event) {
   event.reply('join: ' + event.source.groupId);
 });
-// bot.listen('/linewebhook', 3000);
 
 const app = express();
 const linebotParser = bot.parser();
 app.post('/linewebhook', linebotParser);
-app.get('/line123', function (req, res) {
-  bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'test push');
-});
 app.get('/emit_message', function (req, res) {
   const parsedUrl = parse(req.url, true);
   const query = parsedUrl.query || {};
   const ids = query.id && query.id.split(',') || [];
   const message = query.message;
-  ids.map((id) => {
+  return ids.map((id) => {
     bot.push(id, message);
   });
 });
