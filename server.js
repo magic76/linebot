@@ -56,7 +56,5 @@ app.get('/emit_message', function (req, res) {
   //     console.log('PM2.5: ', t1.PM2_5);
   //     event.reply('PM2.5: ', t1.PM2_5);
   //   });
-     
-});
 });
 app.listen(process.env.PORT || 3000);
