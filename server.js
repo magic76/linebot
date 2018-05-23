@@ -17,11 +17,16 @@ bot.on('message', function (event) {
         const feeds = data.feeds || [];
         const arr = [];
         feeds.map(item => {
-          if (item.SiteName.indexOf(msg) > -1) {
+          if (item.County.indexOf(msg) > -1) {
             arr.push(item);
           }
         });
-        return event.reply('PM2.5: ' + arr[0]['PM2_5']);
+        arr.map(item => {
+          bot.push(profile.userId, 
+            item.SiteName + '的PM2.5: ' + item['PM2_5']);
+        });
+        
+        return event.reply('end');
     });
   });
 });
