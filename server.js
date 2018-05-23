@@ -43,7 +43,7 @@ bot.on('message', function (event) {
         const feeds = data.feeds || [];
         const arr = [];
         feeds.map(item => {
-          if (item.device.indexOf(msg) > -1) {
+          if (item.SiteName.indexOf(msg) > -1) {
             arr.push(item);
           }
         });
