@@ -10,7 +10,7 @@ var bot = linebot({
 
 bot.on('message', function (event) {
   event.source.profile().then(function (profile) {
-    event.reply('小咪書開始回覆' + event.message.text);
+    // event.reply('小咪書開始回覆' + event.message.text);
     fetch('https://pm25.lass-net.org/data/last-all-epa.json').then(data => data.json()).then((data) => {
         const msg = event.message.text;
         
