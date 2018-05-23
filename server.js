@@ -17,14 +17,14 @@ bot.on('message', function (event) {
         const feeds = data.feeds || [];
         const arr = [];
         feeds.map(item => {
-          if (item.County.indexOf(msg) > -1) {
+          if (item.County.indexOf(msg) > -1 || item.SiteName.indexOf(msg) > -1) {
             arr.push(item);
           }
         });
         const currentId = profile.roomId || profile.groupId || profile.userId;
         arr.map(item => {
           bot.push(currentId, 
-            item.SiteName + '的PM2.5: ' + item['PM2_5']);
+            item.SiteName + '的PM2.5: ' + item['PM2_5'] + ' ' + item.Status);
         });
         
         return ;
