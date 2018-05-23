@@ -21,7 +21,7 @@ bot.on('message', function (event) {
             arr.push(item);
           }
         });
-        return event.reply('PM2.5: ' + t1[0]['PM2_5']);
+        return event.reply('PM2.5: ' + arr[0]['PM2_5']);
     });
   });
 });
