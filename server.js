@@ -16,13 +16,12 @@ bot.on('message', function (event) {
 
         const feeds = data.feeds || [];
         const arr = [];
-        return feeds.map(item => {
+        feeds.map(item => {
           if (item.SiteName.indexOf(msg) > -1) {
-            // arr.push(item);
-            event.reply('PM2.5: ' + item['PM2_5']);
+            arr.push(item);
           }
         });
-        // return event.reply('PM2.5: ' + t1[0]['PM2_5']);
+        return event.reply('PM2.5: ' + t1[0]['PM2_5']);
     });
   });
 });
