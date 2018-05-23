@@ -26,7 +26,8 @@ bot.on('message', function (event) {
             item.SiteName + '的PM2.5: ' + item['PM2_5']);
         });
         
-        return event.reply('end');
+        return ;
+        // return event.reply('end');
     });
   });
 });
