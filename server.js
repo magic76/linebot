@@ -9,7 +9,7 @@ var bot = linebot({
 });
 
 bot.on('message', function (event) {
-  event.source.profile().then(function (profile) {
+  // event.source.profile().then(function (profile) {
     fetch('https://pm25.lass-net.org/data/last-all-epa.json').then(data => data.json()).then((data) => {
         const msg = event.message.text;
 
@@ -20,9 +20,9 @@ bot.on('message', function (event) {
             arr.push(item);
           }
         });
-        return event.reply('PM2.5: ', t1[0].PM2_5);
+        return event.reply('PM2.5: ', t1[0]['PM2_5']);
     });
-  });
+  // });
 });
 
 
