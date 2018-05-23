@@ -21,8 +21,9 @@ bot.on('message', function (event) {
             arr.push(item);
           }
         });
+        const currentId = profile.roomId || profile.groupId || profile.userId;
         arr.map(item => {
-          bot.push(profile.userId, 
+          bot.push(currentId, 
             item.SiteName + '的PM2.5: ' + item['PM2_5']);
         });
         
