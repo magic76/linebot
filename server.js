@@ -9,20 +9,22 @@ var bot = linebot({
 });
 
 bot.on('message', function (event) {
-  // event.source.profile().then(function (profile) {
+  event.source.profile().then(function (profile) {
+
     fetch('https://pm25.lass-net.org/data/last-all-epa.json').then(data => data.json()).then((data) => {
         const msg = event.message.text;
 
         const feeds = data.feeds || [];
         const arr = [];
-        feeds.map(item => {
+        return feeds.map(item => {
           if (item.SiteName.indexOf(msg) > -1) {
-            arr.push(item);
+            // arr.push(item);
+            event.reply('PM2.5: ' + item['PM2_5']);
           }
         });
-        return event.reply('PM2.5: ', t1[0]['PM2_5']);
+        // return event.reply('PM2.5: ' + t1[0]['PM2_5']);
     });
-  // });
+  });
 });
 
 
