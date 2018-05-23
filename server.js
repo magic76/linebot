@@ -20,11 +20,9 @@ bot.on('message', function (event) {
             arr.push(item);
           }
         });
-        return arr.map(t1 => {
+        arr.map(t1 => {
           event.reply('PM2.5: ', t1.PM2_5);
         });
-        // return event.reply('Hello ' + profile.displayName + ' ' + profile.userId);
-         
     });
   });
 });
@@ -45,6 +43,21 @@ app.get('/emit_message', function (req, res) {
   return ids.map((id) => {
     bot.push(id, message);
   });
- 
+  // fetch('https://pm25.lass-net.org/data/last-all-epa.json').then(data => data.json()).then((data) => {
+  //   // const msg = event.message.text;
+
+  //   const feeds = data.feeds || [];
+  //   const arr = [];
+  //   feeds.map(item => {
+  //     if (item.SiteName.indexOf('土城') > -1) {
+  //       arr.push(item);
+  //     }
+  //   });
+  //   return arr.map(t1 => {
+  //     console.log('PM2.5: ', t1.PM2_5);
+  //     event.reply('PM2.5: ', t1.PM2_5);
+  //   });
+     
+});
 });
 app.listen(process.env.PORT || 3000);
