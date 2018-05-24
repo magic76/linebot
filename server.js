@@ -24,7 +24,7 @@ bot.on('message', function (event) {
         const currentId = profile.roomId || profile.groupId || profile.userId;
         arr.map(item => {
           bot.push(currentId, 
-            item.SiteName + '的PM2.5: ' + item['PM2_5'] + ' ' + item.Status + ' [ '+ item.PublishTime + ' ]');
+            item.SiteName + '的PM2.5: ' + item['PM2_5'] + ' ' + item.Status + '\n [ '+ item.PublishTime + ' ]');
         });
         
         return ;
