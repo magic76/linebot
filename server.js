@@ -26,7 +26,7 @@ bot.on('message', function (event) {
             
             let sheetName = '';
             workbook.SheetNames.map(Name => {
-                if(Name.toLocaleLowerCase().indexOf(sheetkey) > -1) {
+                if(Name.toLocaleLowerCase().indexOf(sheetkey) === 0) {
                     sheetName = Name;
                 }
             });
