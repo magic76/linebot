@@ -14,7 +14,7 @@ bot.on('message', function (event) {
     event.source.profile().then(function (profile) {
         const currentId = profile.roomId || profile.groupId || profile.userId;
         if (msg.indexOf('#') === 0) {
-            const productName = msg.replcae('#', '').toLowerCase();
+            const productName = msg.replace('#', '').toLowerCase();
             const workbook = XLSX.readFile('2018-05-MOLP_Price.xlsx');
             const sheetNames = workbook.SheetNames; 
             const worksheet = workbook.Sheets[sheetNames[5]];
