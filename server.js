@@ -39,6 +39,7 @@ bot.on('message', function (event) {
               });
               bot.push(currentId, str);
             });
+            return ;
         } else {
             fetch('https://pm25.lass-net.org/data/last-all-epa.json').then(data => data.json()).then((data) => {
                 const feeds = data.feeds || [];
