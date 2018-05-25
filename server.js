@@ -24,7 +24,7 @@ bot.on('message', function (event) {
             const result = [];
             sheet.map(item => {
                 Object.keys(item).some(key => {
-                    if (item[key].indexOf(wordKey) > -1) {
+                    if (item[key].toLowerCase().indexOf(wordKey) > -1) {
                         result.push(item);
                         return true;
                     } else {
