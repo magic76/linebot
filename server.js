@@ -14,11 +14,25 @@ bot.on('message', function (event) {
     event.source.profile().then(function (profile) {
         const currentId = profile.roomId || profile.groupId || profile.userId;
         if (msg.indexOf('#') === 0) {
-            const productName = msg.replace('#', '').toLowerCase();
             const workbook = XLSX.readFile('2018-05-MOLP_Price.xlsx');
-            const sheetNames = workbook.SheetNames; 
-            const worksheet = workbook.Sheets[sheetNames[5]];
-
+            const rawmessage = msg.replace('#', '').toLowerCase();
+            if (msg === 'list') {
+                return event.reply(workbook.Sheets.join('__'));
+            }
+            const msgs = rawmessage.split('#');
+            const sheetkey = msgs[0];
+            const productName = msgs[1];
+            
+            
+            let sheetName = '';
+            workbook.SheetNames.map(Name => {
+                if(Name.toLocaleLowerCase().indexOf(sheetkey) > -1) {
+                    sheetName = Name;
+                }
+            });
+            
+            const worksheet = workbook.Sheets[sheetName];
+            
             const sheet = XLSX.utils.sheet_to_json(worksheet);
             const wordKey = productName;
             const result = [];

@@ -1,14 +1,25 @@
 const XLSX = require('xlsx');
-const msg = '#office';
-const productName = msg.replace('#', '').toLowerCase();
-const workbook = XLSX.readFile('2018-05-MOLP_Price.xlsx');
-const sheetNames = workbook.SheetNames; 
-const worksheet = workbook.Sheets[sheetNames[5]];
+const msg = '#C#office';
 
+
+const rawmessage = msg.replace('#', '').toLowerCase();
+const msgs = rawmessage.split('#');
+const sheetkey = msgs[0];
+const productName = msgs[1];
+
+const workbook = XLSX.readFile('2018-05-MOLP_Price.xlsx');
+let sheetName = '';
+workbook.SheetNames.map(Name => {
+    if(Name.toLocaleLowerCase().indexOf(sheetkey) === 0) {
+        sheetName = Name;
+    }
+});
+
+const worksheet = workbook.Sheets[sheetName];
 const sheet = XLSX.utils.sheet_to_json(worksheet);
 const wordKey = productName;
 const result = [];
-// console.log(sheet)
+
 sheet.map(item => {
     Object.keys(item).some(key => {
         if (item[key].toLowerCase().indexOf(wordKey) > -1) {
