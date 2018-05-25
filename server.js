@@ -14,7 +14,7 @@ bot.on('message', function (event) {
     event.source.profile().then(function (profile) {
         const currentId = profile.roomId || profile.groupId || profile.userId;
         if (msg.indexOf('#') === 0) {
-            const workbook = XLSX.readFile('2018-05-MOLP_Price.xlsx');
+            const workbook = XLSX.readFile('2018-05-MOLP-Price.xlsx');
             const rawmessage = msg.replace('#', '').toLowerCase();
             if (rawmessage === 'list') {
                 return bot.push(currentId, workbook.SheetNames.join(' , '));
