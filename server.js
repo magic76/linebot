@@ -3,34 +3,61 @@ var linebot = require('linebot');
 const { parse } = require('url');
 const fetch = require('isomorphic-fetch');
 var bot = linebot({
-  channelId: '1581950485',
-  channelSecret: 'b65b4c323a1350d2c19b1862c1c9e030',
-  channelAccessToken: 'EJLlUxoNpvsHRwbgF+pi8QYM7EuKX+HnStVpdA99Vzw+WB3OhkUI9CPC3fIhupHCwqEFvGp1uWXQI53vQVAx/gy5JyLKQP9NI7xTKXrPpfsAggUpwjtjiNO/EEXlGEfzSigSTy2IQe/sTMchXhKr0gdB04t89/1O/w1cDnyilFU='
+    channelId: '1581950485',
+    channelSecret: 'b65b4c323a1350d2c19b1862c1c9e030',
+    channelAccessToken: 'EJLlUxoNpvsHRwbgF+pi8QYM7EuKX+HnStVpdA99Vzw+WB3OhkUI9CPC3fIhupHCwqEFvGp1uWXQI53vQVAx/gy5JyLKQP9NI7xTKXrPpfsAggUpwjtjiNO/EEXlGEfzSigSTy2IQe/sTMchXhKr0gdB04t89/1O/w1cDnyilFU='
 });
 
 bot.on('message', function (event) {
-  event.source.profile().then(function (profile) {
-    // event.reply('小咪書開始回覆' + event.message.text);
-    fetch('https://pm25.lass-net.org/data/last-all-epa.json').then(data => data.json()).then((data) => {
-        const msg = event.message.text;
-        
-        const feeds = data.feeds || [];
-        const arr = [];
-        feeds.map(item => {
-          if (item.County.indexOf(msg) > -1 || item.SiteName.indexOf(msg) > -1) {
-            arr.push(item);
-          }
-        });
-        const currentId = profile.roomId || profile.groupId || profile.userId;
-        arr.map(item => {
-          bot.push(currentId, 
-            item.SiteName + '的PM2.5: ' + item['PM2_5'] + ' ' + item.Status + '\n [ '+ item.PublishTime + ' ]');
-        });
-        
-        return ;
-        // return event.reply('end');
-    });
+    const msg = event.message.text;
+    event.source.profile().then(function (profile) {
+        if (msg.indexOf('#') === 0) {
+            const productName = msg.replcae('#', '');
+            const XLSX = require('xlsx');
+            const workbook = XLSX.readFile('2018-05-MOLP Price.xlsx');
+            const sheetNames = workbook.SheetNames; 
+            const worksheet = workbook.Sheets[sheetNames[5]];
+
+            const sheet = XLSX.utils.sheet_to_json(worksheet);
+            const wordKey = productName;
+            const result = [];
+            sheet.map(item => {
+                Object.keys(item).some(key => {
+                    if (item[key].indexOf(wordKey) > -1) {
+                        result.push(item);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+            });
+            result.map(product => {
+              let str = '';
+              Object.keys(product).map(itemKey => {
+                  str += itemKey + ': ' + product[itemKey] + '\n';
+              });
+              bot.push(currentId, str);
+            });
+        } else {
+            fetch('https://pm25.lass-net.org/data/last-all-epa.json').then(data => data.json()).then((data) => {
+                const feeds = data.feeds || [];
+                const arr = [];
+                feeds.map(item => {
+                  if (item.County.indexOf(msg) > -1 || item.SiteName.indexOf(msg) > -1) {
+                    arr.push(item);
+                  }
+                });
+                const currentId = profile.roomId || profile.groupId || profile.userId;
+                arr.map(item => {
+                  bot.push(currentId, 
+                    item.SiteName + '的PM2.5: ' + item['PM2_5'] + ' ' + item.Status + '\n [ '+ item.PublishTime + ' ]');
+                });
+                return ;
+                // return event.reply('end');
+            });
+        }
   });
+  
 });
 
 
