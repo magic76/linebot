@@ -2,6 +2,7 @@ const express = require('express');
 var linebot = require('linebot');
 const { parse } = require('url');
 const fetch = require('isomorphic-fetch');
+const XLSX = require('xlsx');
 var bot = linebot({
     channelId: '1581950485',
     channelSecret: 'b65b4c323a1350d2c19b1862c1c9e030',
@@ -10,11 +11,11 @@ var bot = linebot({
 
 bot.on('message', function (event) {
     const msg = event.message.text;
+    const currentId = profile.roomId || profile.groupId || profile.userId;
     event.source.profile().then(function (profile) {
         if (msg.indexOf('#') === 0) {
-            const productName = msg.replcae('#', '');
-            const XLSX = require('xlsx');
-            const workbook = XLSX.readFile('2018-05-MOLP Price.xlsx');
+            const productName = msg.replcae('#', '').toLowerCase();
+            const workbook = XLSX.readFile('2018-05-MOLP_Price.xlsx');
             const sheetNames = workbook.SheetNames; 
             const worksheet = workbook.Sheets[sheetNames[5]];
 
@@ -47,7 +48,6 @@ bot.on('message', function (event) {
                     arr.push(item);
                   }
                 });
-                const currentId = profile.roomId || profile.groupId || profile.userId;
                 arr.map(item => {
                   bot.push(currentId, 
                     item.SiteName + '的PM2.5: ' + item['PM2_5'] + ' ' + item.Status + '\n [ '+ item.PublishTime + ' ]');
