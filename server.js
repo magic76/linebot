@@ -11,8 +11,8 @@ var bot = linebot({
 
 bot.on('message', function (event) {
     const msg = event.message.text;
-    const currentId = profile.roomId || profile.groupId || profile.userId;
     event.source.profile().then(function (profile) {
+        const currentId = profile.roomId || profile.groupId || profile.userId;
         if (msg.indexOf('#') === 0) {
             const productName = msg.replcae('#', '').toLowerCase();
             const workbook = XLSX.readFile('2018-05-MOLP_Price.xlsx');
