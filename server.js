@@ -16,8 +16,8 @@ bot.on('message', function (event) {
         if (msg.indexOf('#') === 0) {
             const workbook = XLSX.readFile('2018-05-MOLP_Price.xlsx');
             const rawmessage = msg.replace('#', '').toLowerCase();
-            if (msg === 'list') {
-                return bot.push(currentId, workbook.SheetNames.join('__'));
+            if (rawmessage === 'list') {
+                return bot.push(currentId, workbook.SheetNames.join(' , '));
             }
             const msgs = rawmessage.split('#');
             const sheetkey = msgs[0];
