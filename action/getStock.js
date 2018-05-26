@@ -1,18 +1,23 @@
 const fetch = require('isomorphic-fetch');
+const XLSX = require('xlsx');
 
-function sleep(milliseconds) {
-    var start = new Date().getTime();
-    for (var i = 0; i < 1e7; i++) {
-        if ((new Date().getTime() - start) > milliseconds){
-        break;
+const getStockId = (companyKey) => {
+    const workbook = XLSX.readFile('action/t187ap03_L.xlsx');
+    const sheet = XLSX.utils.sheet_to_json(workbook.Sheets['t187ap03_L']);
+    let stockId = companyKey;
+    sheet.some(item => {
+        if (item['公司名稱'].indexOf(companyKey) > -1) {
+            stockId = item['公司代號'];
+            return true;
         }
-    }
-}
+    })
+    return stockId;
+};
 const formatHTML = (str) => {
     return str.replace(/<[\w =";#\/?-]+>/g, '').replace(/\n/g, '').replace(/ /g, '');
 }
 module.exports = (bot, msg, currentId) => {
-    const stockId = msg.replace('$', '');
+    const stockId = getStockId(msg.replace('$', ''));
     return fetch('https://tw.stock.yahoo.com/q/q?s=' + stockId).then(data => data.text()).then((data) => {
         const str = data.split('<table border=2 width="750">')[1].split('<td align=center width=137 class="tt">')[0];
         let columnNames = str.split('<td align=center width=105><a')[0].replace(/<\/th>/g, ',');
