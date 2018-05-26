@@ -3,6 +3,7 @@ var linebot = require('linebot');
 const { parse } = require('url');
 const sister = require('./action/sister');
 const getPM2_5 = require('./action/getPM2_5');
+const getStock = require('./action/getStock');
 var bot = linebot({
     channelId: '1581950485',
     channelSecret: 'b65b4c323a1350d2c19b1862c1c9e030',
@@ -14,9 +15,11 @@ bot.on('message', function (event) {
     event.source.profile().then(function (profile) {
         const currentId = profile.roomId || profile.groupId || profile.userId;
         if (msg.indexOf('#') === 0) {
-           return sister(bot, msg, currentId);
-        } else {
             return sister(bot, msg, currentId);
+        } else if (msg.indexOf('$') === 0) {
+            return getStock(bot, msg, currentId);
+        } else {
+            return getPM2_5(bot, msg, currentId);
         }
   });
   
