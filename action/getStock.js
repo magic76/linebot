@@ -22,7 +22,7 @@ module.exports = (bot, msg, currentId) => {
         bot.push(currentId, outputStr);
 
         //睡10秒防止被鎖ip
-        sleep(10000);
+        setTimeout(sleep.bind(10000), 0)
         return ;
         // return event.reply('end');
     });
