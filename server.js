@@ -1,8 +1,8 @@
 const express = require('express');
 var linebot = require('linebot');
 const { parse } = require('url');
-const fetch = require('isomorphic-fetch');
-const XLSX = require('xlsx');
+const sister = require('./action/sister');
+const getPM2_5 = require('./action/getPM2_5');
 var bot = linebot({
     channelId: '1581950485',
     channelSecret: 'b65b4c323a1350d2c19b1862c1c9e030',
@@ -14,62 +14,9 @@ bot.on('message', function (event) {
     event.source.profile().then(function (profile) {
         const currentId = profile.roomId || profile.groupId || profile.userId;
         if (msg.indexOf('#') === 0) {
-            const workbook = XLSX.readFile('2018-05-MOLP-Price.xlsx');
-            const rawmessage = msg.replace('#', '').toLowerCase();
-            if (rawmessage === 'list') {
-                return bot.push(currentId, workbook.SheetNames.join(' , '));
-            }
-            const msgs = rawmessage.split('#');
-            const sheetkey = msgs[0];
-            const productName = msgs[1];
-            
-            
-            let sheetName = '';
-            workbook.SheetNames.map(Name => {
-                if(Name.toLocaleLowerCase().indexOf(sheetkey) === 0) {
-                    sheetName = Name;
-                }
-            });
-            
-            const worksheet = workbook.Sheets[sheetName];
-            
-            const sheet = XLSX.utils.sheet_to_json(worksheet);
-            const wordKey = productName;
-            const result = [];
-            sheet.map(item => {
-                Object.keys(item).some(key => {
-                    if (item[key].toLowerCase().indexOf(wordKey) > -1) {
-                        result.push(item);
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-            });
-            result.map(product => {
-              let str = '';
-              Object.keys(product).map(itemKey => {
-                  str += itemKey + ': ' + product[itemKey] + '\n';
-              });
-              bot.push(currentId, str);
-            });
-            return ;
+           return sister(bot, msg, currentId);
         } else {
-            fetch('https://pm25.lass-net.org/data/last-all-epa.json').then(data => data.json()).then((data) => {
-                const feeds = data.feeds || [];
-                const arr = [];
-                feeds.map(item => {
-                  if (item.County.indexOf(msg) > -1 || item.SiteName.indexOf(msg) > -1) {
-                    arr.push(item);
-                  }
-                });
-                arr.map(item => {
-                  bot.push(currentId, 
-                    item.SiteName + '的PM2.5: ' + item['PM2_5'] + ' ' + item.Status + '\n [ '+ item.PublishTime + ' ]');
-                });
-                return ;
-                // return event.reply('end');
-            });
+            return sister(bot, msg, currentId);
         }
   });
   
