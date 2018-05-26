@@ -4,7 +4,7 @@ module.exports = (bot, msg, currentId) => {
     const rawmessage = msg.replace('#', '').toLowerCase();
     if (rawmessage === 'list') {
         const listStr = workbook.SheetNames.map((item, i) => (`${i}: ${item}`)).join('\n');
-        return bot.push(currentId, listStr);
+        return bot.push(currentId, '輸入數字或關鍵字：\n' + listStr);
     }
     const msgs = rawmessage.split('#');
     const sheetkey = msgs[0];
