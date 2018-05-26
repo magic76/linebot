@@ -18,6 +18,8 @@ bot.on('message', function (event) {
             return sister(bot, msg, currentId);
         } else if (msg.indexOf('$') === 0) {
             return getStock(bot, msg, currentId);
+        } else if (msg.indexOf('?') === 0) {
+           return event.reply('https://www.google.com.tw/search?q=' + msg.replace('?', ''));
         } else {
             return getPM2_5(bot, msg, currentId);
         }
@@ -50,5 +52,8 @@ app.post('/emit_message', function (req, res) {
     return ids.map((id) => {
       bot.push(id, message);
     });
-  });
+});
+app.get('/test', function (req, res) {
+  bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'https://www.google.com.tw/search?q=abcdefghhh');
+});
 app.listen(process.env.PORT || 3000);
