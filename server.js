@@ -1,6 +1,7 @@
 const express = require('express');
 var linebot = require('linebot');
 const { parse } = require('url');
+const bodyParser = require('body-parser');
 const sister = require('./action/sister');
 const getPM2_5 = require('./action/getPM2_5');
 const getStock = require('./action/getStock');
@@ -33,6 +34,8 @@ bot.on('join', function (event) {
 });
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 const linebotParser = bot.parser();
 app.post('/linewebhook', linebotParser);
 app.get('/emit_message', function (req, res) {
