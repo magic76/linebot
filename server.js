@@ -34,8 +34,8 @@ bot.on('join', function (event) {
 });
 
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 const linebotParser = bot.parser();
 app.post('/linewebhook', linebotParser);
 app.get('/emit_message', function (req, res) {
@@ -57,19 +57,20 @@ app.post('/emit_message', function (req, res) {
     });
 });
 app.post('/gitwebhook', function (req, res) {
-  const body = req.body || {};
-  if (body.object_kind === 'merge_request') {
-      const userName = body.user.name;
-      const assignee = body.assignee;
-      const prUrl = body.object_attributes.url;
-      const source = body.object_attributes.source_branch;
-      const target = body.object_attributes.target_branch;
-      const description = body.object_attributes.description || '';
+  // const body = req.body || {};
+  // if (body.object_kind === 'merge_request') {
+  //     const userName = body.user.name;
+  //     const assignee = body.assignee;
+  //     const prUrl = body.object_attributes.url;
+  //     const source = body.object_attributes.source_branch;
+  //     const target = body.object_attributes.target_branch;
+  //     const description = body.object_attributes.description || '';
 
-      let outStr = userName + '\n' + description ? description + '\n' : '' + prUrl;
-      if (target.indexOf('master') > -1) {
-          bot.push('U2a4c41ed8bfd4e83f33db268b4564404', outStr);
-      }
-  }
+  //     let outStr = userName + '\n' + description ? description + '\n' : '';
+  //     outStr += prUrl;
+  //     if (target.indexOf('master') > -1) {
+  //         bot.push('U2a4c41ed8bfd4e83f33db268b4564404', outStr);
+  //     }
+  // }
 });
 app.listen(process.env.PORT || 3000);
