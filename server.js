@@ -67,11 +67,11 @@ app.post('/gitwebhook', function (req, res) {
     const description = body.object_attributes.description || '';;
 
     let outStr = userName;
-    description.length > 0 && outStr += description + '\n';
+    description.length > 0 && (outStr += description + '\n');
     outStr += prUrl;
-    // if (target.indexOf('master') > -1) {
-    bot.push('U2a4c41ed8bfd4e83f33db268b4564404', outStr);
-    // }
+    if (target.indexOf('master') > -1) {
+        bot.push('U2a4c41ed8bfd4e83f33db268b4564404', outStr);
+    }
   }
 });
 app.listen(process.env.PORT || 3000);
