@@ -63,8 +63,8 @@ app.post('/gitwebhook', function (req, res) {
     const userName = body.user.name;
     const assignee = body.assignee;
 
-    Object.keys(body.object_attribute).map(name => {
-      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'object_attribute ' + name + ': ' + body.object_attribute[name]);
+    Object.keys(body.object_attributes).map(name => {
+      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'object_attribute ' + name + ': ' + body.object_attributes[name]);
     });
     // Object.keys(body.project).map(name => {
     //   bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'project ' + name + ': ' + body.project[name]);
