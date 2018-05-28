@@ -53,7 +53,10 @@ app.post('/emit_message', function (req, res) {
       bot.push(id, message);
     });
 });
-app.get('/test', function (req, res) {
-  bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'https://www.google.com.tw/search?q=abcdefghhh');
+app.post('/gitwebhook', function (req, res) {
+  const body = req.body;
+  return Object.keys(body).map(name => {
+      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', name + '_' + body[name]);
+  });
 });
 app.listen(process.env.PORT || 3000);
