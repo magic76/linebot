@@ -58,8 +58,12 @@ app.post('/emit_message', function (req, res) {
 });
 app.post('/gitwebhook', function (req, res) {
   const body = req.body;
-  return Object.keys(body).map(name => {
-      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', name + '_' + body[name]);
+  Object.keys(body.commits).map(name => {
+      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', name + ': ' + body[name]);
   });
+  bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '=======================');
+  Object.keys(body.project).map(name => {
+    bot.push('U2a4c41ed8bfd4e83f33db268b4564404', name + ': ' + body[name]);
+});
 });
 app.listen(process.env.PORT || 3000);
