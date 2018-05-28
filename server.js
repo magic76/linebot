@@ -62,16 +62,15 @@ app.post('/gitwebhook', function (req, res) {
   if (body.object_kind === 'merge_request') {
     const userName = body.user.name;
     const assignee = body.assignee;
+    const prUrl = body.object_attributes.url;
+    const source = body.object_attributes.source_branch;
+    const target = body.object_attributes.target_branch;
+    const description = body.object_attributes.description;
 
-    Object.keys(body.object_attributes).map(name => {
-      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'object_attribute ' + name + ': ' + body.object_attributes[name]);
-    });
-    // Object.keys(body.project).map(name => {
-    //   bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'project ' + name + ': ' + body.project[name]);
-    // });
-    // Object.keys(body).map(name => {
-    //   bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'body ' + name + ': ' + body[name]);
-    // });
+    let outStr = userName + ' create pr from ' + source + ' to ' + target + '\n';
+    outStr += prUrl + '\n' + description;
+    bot.push('U2a4c41ed8bfd4e83f33db268b4564404', outStr);
+    
   }
 });
 app.listen(process.env.PORT || 3000);
