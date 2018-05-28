@@ -60,11 +60,15 @@ app.post('/gitwebhook', function (req, res) {
   const body = req.body || {};
   bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '=======start=======');
   if (body.object_kind === 'merge_request') {
+    const userName = body.user.name;
     Object.keys(body.user).map(name => {
-      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', name + ': ' + body.user[name]);
+      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'user' + name + ': ' + body.user[name]);
     });
     Object.keys(body.project).map(name => {
-      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', name + ': ' + body.project[name]);
+      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'project' + name + ': ' + body.project[name]);
+    });
+    Object.keys(body).map(name => {
+      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', 'body' + name + ': ' + body[name]);
     });
   }
 });
