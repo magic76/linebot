@@ -34,6 +34,7 @@ bot.on('join', function (event) {
 });
 
 const app = express();
+
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
 const linebotParser = bot.parser();
@@ -43,18 +44,20 @@ app.get('/emit_message', function (req, res) {
   const query = parsedUrl.query || {};
   const ids = query.id && query.id.split(',') || [];
   const message = query.message;
-  return ids.map((id) => {
+  ids.map((id) => {
     bot.push(id, message);
   });
+  return res.json({});
 });
 app.post('/emit_message', function (req, res) {
     const parsedUrl = parse(req.url, true);
     const query = parsedUrl.query || {};
     const ids = query.id && query.id.split(',') || [];
     const message = query.message;
-    return ids.map((id) => {
+    ids.map((id) => {
       bot.push(id, message);
     });
+    return res.json({});
 });
 app.post('/gitwebhook', function (req, res) {
   // const body = req.body || {};
