@@ -19,8 +19,8 @@ bot.on('message', function (event) {
             return sister(bot, msg, currentId);
         } else if (msg.indexOf('$') === 0) {
             return getStock(bot, msg, currentId);
-        } else if (msg.indexOf('?') === 0) {
-           return event.reply('https://www.google.com.tw/search?q=' + msg.replace('?', ''));
+        } else if (msg.indexOf('?') === 0 || msg.indexOf('？') === 0) {
+           return event.reply('https://www.google.com.tw/search?q=' + msg.replace('?', '').replace('？', ''));
         } else {
             return getPM2_5(bot, msg, currentId);
         }
@@ -59,21 +59,21 @@ app.post('/emit_message', function (req, res) {
     });
     return res.json({});
 });
-app.post('/gitwebhook', function (req, res) {
-  // const body = req.body || {};
-  // if (body.object_kind === 'merge_request') {
-  //     const userName = body.user.name;
-  //     const assignee = body.assignee;
-  //     const prUrl = body.object_attributes.url;
-  //     const source = body.object_attributes.source_branch;
-  //     const target = body.object_attributes.target_branch;
-  //     const description = body.object_attributes.description || '';
+app.post('/gitwebhook', bodyParser.json(), function (req, res) {
+  const body = req.body || {};
+  if (body.object_kind === 'merge_request') {
+      const userName = body.user.name;
+      const assignee = body.assignee;
+      const prUrl = body.object_attributes.url;
+      const source = body.object_attributes.source_branch;
+      const target = body.object_attributes.target_branch;
+      const description = body.object_attributes.description || '';
 
-  //     let outStr = userName + '\n' + description ? description + '\n' : '';
-  //     outStr += prUrl;
-  //     if (target.indexOf('master') > -1) {
-  //         bot.push('U2a4c41ed8bfd4e83f33db268b4564404', outStr);
-  //     }
-  // }
+      let outStr = userName + '\n' + description ? description + '\n' : '';
+      outStr += prUrl;
+      if (target.indexOf('master') > -1) {
+          bot.push('U2a4c41ed8bfd4e83f33db268b4564404', outStr);
+      }
+  }
 });
 app.listen(process.env.PORT || 3000);
