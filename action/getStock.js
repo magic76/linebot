@@ -1,17 +1,30 @@
 const fetch = require('isomorphic-fetch');
 const XLSX = require('xlsx');
-
+const name = require('./stockName');
+const stockObj = {};
+const nameArry = []
+name.replace(/	/g,'\n')
+.split('\n')
+.map(item=>item.split('  ')
+               .map(stock=>stock.trim())
+               .filter(a=>a))
+.filter(a=>a.length > 0)
+.map(item=>{
+    const id = item[0];
+    const stockName = item[1];
+    nameArry.push(stockName);
+    stockObj[stockName] = id;
+});
 const getStockId = (companyKey) => {
-    const workbook = XLSX.readFile('action/t187ap03_L.xlsx');
-    const sheet = XLSX.utils.sheet_to_json(workbook.Sheets['t187ap03_L']);
+    
     let stockId = companyKey;
-    sheet.some(item => {
-        if (item['公司名稱'].indexOf(companyKey) > -1) {
-            stockId = item['公司代號'];
-            return true;
+    nameArry.some(name => {
+        if (name.indexOf(companyKey) > -1) {
+            stockId = stockObj[name];
         }
-    })
+    });
     return stockId;
+    
 };
 const formatHTML = (str) => {
     return str.replace(/<[\w =";#\/?-]+>/g, '').replace(/\n/g, '').replace(/ /g, '');
