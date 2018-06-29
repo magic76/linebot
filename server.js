@@ -74,6 +74,15 @@ app.post('/gitwebhook', bodyParser.json(), function (req, res) {
       if (target.indexOf('master') > -1) {
           bot.push('U2a4c41ed8bfd4e83f33db268b4564404', outStr);
       }
+      
+      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '==================body=======');
+      Object.keys(body).map(item => {
+        bot.push('U2a4c41ed8bfd4e83f33db268b4564404', item);
+      })
+      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '==================object_attributes=======');
+      Object.keys(body.object_attributes).map(item => {
+        bot.push('U2a4c41ed8bfd4e83f33db268b4564404', item);
+      })
   }
 });
 app.listen(process.env.PORT || 3000);
