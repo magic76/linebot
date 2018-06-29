@@ -68,22 +68,29 @@ app.post('/gitwebhook', bodyParser.json(), function (req, res) {
       const source = body.object_attributes.source_branch;
       const target = body.object_attributes.target_branch;
       const description = body.object_attributes.description || '';
+      const title = body.object_attributes.title;
 
-      let outStr = userName + '\n' + description ? description + '\n' : '';
+      let outStr = userName + '\n' + title ? description + '\n' : '';
       outStr += prUrl;
       if (target.indexOf('master') > -1) {
           bot.push('U2a4c41ed8bfd4e83f33db268b4564404', outStr);
       }
       
-      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '==================body=======' + Object.keys(body).join('__'));
+    //   bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '==================body=======' + Object.keys(body).join('__'));
 
-      Object.keys(body).map(item => {
-        bot.push('U2a4c41ed8bfd4e83f33db268b4564404', `${item}, ${body[item]}`);
-      })
-      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '==================object_attributes=======' + Object.keys(body.object_attributes).join('__'));
+    //   Object.keys(body).map(item => {
+    //     bot.push('U2a4c41ed8bfd4e83f33db268b4564404', `${item}, ${body[item]}`);
+    //   })
+    //   bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '==================object_attributes=======' + Object.keys(body.object_attributes).join('__'));
       
-      Object.keys(body.object_attributes).map(item => {
-        bot.push('U2a4c41ed8bfd4e83f33db268b4564404', `${item}, ${body.object_attributes[item]}`);
+    //   Object.keys(body.object_attributes).map(item => {
+    //     bot.push('U2a4c41ed8bfd4e83f33db268b4564404', `${item}, ${body.object_attributes[item]}`);
+    //   })
+
+      bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '==================object_attributes=======' + Object.keys(body.user).join('__'));
+      
+      Object.keys(body.user).map(item => {
+        bot.push('U2a4c41ed8bfd4e83f33db268b4564404', `${item}, ${body.user[item]}`);
       })
   }
 });
