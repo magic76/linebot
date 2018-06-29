@@ -70,10 +70,9 @@ app.post('/gitwebhook', bodyParser.json(), function (req, res) {
       const description = body.object_attributes.description || '';
       const title = body.object_attributes.title;
 
-      let outStr = `用戶：${userName}\n標題：${title}網址：${prUrl}`;
+      let outStr = `用戶：${userName}\n標題：${title}\n狀態：${body.object_attributes.state}\n網址：${prUrl}`;
       if (target.indexOf('master') > -1) {
           bot.push('U2a4c41ed8bfd4e83f33db268b4564404', outStr);
-          bot.push('U2a4c41ed8bfd4e83f33db268b4564404', `state: ${body.object_attributes.state}`);
           
       }
       
