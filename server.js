@@ -75,6 +75,7 @@ app.post('/gitwebhook', bodyParser.json(), function (req, res) {
           bot.push('U2a4c41ed8bfd4e83f33db268b4564404', outStr);
           
       }
+      res.end();
       
     //   bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '==================body=======' + Object.keys(body).join('__'));
 
