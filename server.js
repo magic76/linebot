@@ -21,6 +21,8 @@ bot.on('message', function (event) {
             return getStock(bot, msg, currentId);
         } else if (msg.indexOf('?') === 0 || msg.indexOf('？') === 0) {
            return event.reply('https://www.google.com.tw/search?q=' + msg.replace('?', '').replace('？', ''));
+        } else if (msg.indexOf('init') === 0) {
+            return event.reply(`id: ${currentId}`);
         } else {
             return getPM2_5(bot, msg, currentId);
         }
@@ -61,7 +63,7 @@ app.post('/emit_message', function (req, res) {
 });
 app.post('/gitwebhook', bodyParser.json(), function (req, res) {
   const body = req.body || {};
-  if (body.object_kind === 'merge_request') {
+  if (body.object_kind === 'merge_request' && body.object_attributes.state.indexOf('opened') > -1) {
       const userName = body.user.name;
       const assignee = body.assignee;
       const prUrl = body.object_attributes.url;
@@ -70,29 +72,12 @@ app.post('/gitwebhook', bodyParser.json(), function (req, res) {
       const description = body.object_attributes.description || '';
       const title = body.object_attributes.title;
 
-      let outStr = `用戶：${userName}\n標題：${title}\n狀態：${body.object_attributes.state}\n網址：${prUrl}`;
+      let outStr = `用戶：${userName}\n標題：${title}\n網址：${prUrl}`;
+    //   let outStr = `用戶：${userName}\n標題：${title}\n狀態：${body.object_attributes.state}\n網址：${prUrl}`;
       if (target.indexOf('master') > -1) {
           bot.push('U2a4c41ed8bfd4e83f33db268b4564404', outStr);
-          
       }
       res.end();
-      
-    //   bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '==================body=======' + Object.keys(body).join('__'));
-
-    //   Object.keys(body).map(item => {
-    //     bot.push('U2a4c41ed8bfd4e83f33db268b4564404', `${item}, ${body[item]}`);
-    //   })
-    //   bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '==================object_attributes=======' + Object.keys(body.object_attributes).join('__'));
-      
-    //   Object.keys(body.object_attributes).map(item => {
-    //     bot.push('U2a4c41ed8bfd4e83f33db268b4564404', `${item}, ${body.object_attributes[item]}`);
-    //   })
-
-    //   bot.push('U2a4c41ed8bfd4e83f33db268b4564404', '==================object_attributes=======' + Object.keys(body.user).join('__'));
-      
-    //   Object.keys(body.user).map(item => {
-    //     bot.push('U2a4c41ed8bfd4e83f33db268b4564404', `${item}, ${body.user[item]}`);
-    //   })
   }
 });
 app.listen(process.env.PORT || 3000);
