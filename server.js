@@ -75,7 +75,15 @@ app.post('/gitwebhook', bodyParser.json(), function (req, res) {
       let outStr = `有人提PR喲!\n用戶：${userName}\n標題：${title}\n網址：${prUrl}`;
     //   let outStr = `用戶：${userName}\n標題：${title}\n狀態：${body.object_attributes.state}\n網址：${prUrl}`;
       if (target.indexOf('master') > -1) {
+
+          // 大前端群組
           bot.push('Ca795cf06d72904a3183f7d00eaacaeb0', outStr);
+
+          if (prUrl.indexOf('frontend_graph_api') > -1) {
+              
+              // graphQL群組
+              bot.push('C9accf97751b8c3059b12940513b56aaa', outStr);
+          } 
       }
       res.end();
   }
