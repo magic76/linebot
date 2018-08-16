@@ -81,11 +81,6 @@ app.post('/gitwebhook', bodyParser.json(), function (req, res) {
 
           // gapi群組
           bot.push('Cd2725b9fbeb655b5c81e5c3c8ff0f0e7', outStr);
-          if (prUrl.indexOf('frontend_graph_api') > -1) {
-              
-              // graphQL群組
-              bot.push('C9accf97751b8c3059b12940513b56aaa', outStr);
-          }
           
       }
       res.end();
