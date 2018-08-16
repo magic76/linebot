@@ -83,7 +83,12 @@ app.post('/gitwebhook', bodyParser.json(), function (req, res) {
               
               // graphQL群組
               bot.push('C9accf97751b8c3059b12940513b56aaa', outStr);
-          } 
+          } else {
+
+              //主站群組
+              bot.push('C400ee2f382ec441bf30b7f38f1435582', outStr)
+          }
+          
       }
       res.end();
   }
