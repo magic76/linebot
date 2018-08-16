@@ -79,14 +79,12 @@ app.post('/gitwebhook', bodyParser.json(), function (req, res) {
           // 大前端群組
           bot.push('Ca795cf06d72904a3183f7d00eaacaeb0', outStr);
 
+          // gapi群組
+          bot.push('Cd2725b9fbeb655b5c81e5c3c8ff0f0e7', outStr);
           if (prUrl.indexOf('frontend_graph_api') > -1) {
               
               // graphQL群組
               bot.push('C9accf97751b8c3059b12940513b56aaa', outStr);
-          } else {
-
-              //主站群組
-              bot.push('C400ee2f382ec441bf30b7f38f1435582', outStr)
           }
           
       }
