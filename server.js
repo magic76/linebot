@@ -61,29 +61,36 @@ app.post('/emit_message', function (req, res) {
     });
     return res.json({});
 });
-app.post('/gitwebhook', bodyParser.json(), function (req, res) {
-  const body = req.body || {};
-  if (body.object_kind === 'merge_request' && body.object_attributes.state.indexOf('opened') > -1) {
-      const userName = body.user.name;
-      const assignee = body.assignee;
-      const prUrl = body.object_attributes.url;
-      const source = body.object_attributes.source_branch;
-      const target = body.object_attributes.target_branch;
-      const description = body.object_attributes.description || '';
-      const title = body.object_attributes.title;
 
-      let outStr = `有人提PR喲!\n用戶：${userName}\n標題：${title}\n網址：${prUrl}`;
-    //   let outStr = `用戶：${userName}\n標題：${title}\n狀態：${body.object_attributes.state}\n網址：${prUrl}`;
+app.post('/gitwebhook', bodyParser.json(), function (req, res) {
+    const body = req.body || {};
+    if (body.object_kind === 'merge_request' && body.object_attributes.state.indexOf('opened') > -1) {
+        const userName = body.user.name;
+        const assignee = body.assignee;
+        const prUrl = body.object_attributes.url;
+        const source = body.object_attributes.source_branch;
+        const target = body.object_attributes.target_branch;
+        const description = body.object_attributes.description || '';
+        const title = body.object_attributes.title;
+  
+        let outStr = `有人提PR喲!\n用戶：${userName}\n標題：${title}\n網址：${prUrl}`;
+      //   let outStr = `用戶：${userName}\n標題：${title}\n狀態：${body.object_attributes.state}\n網址：${prUrl}`;
+      
       if (target.indexOf('master') > -1) {
 
-          // 大前端群組
-          bot.push('Ca795cf06d72904a3183f7d00eaacaeb0', outStr);
+        if (prUrl.indexOf('snk') > -1) {
 
-          // gapi群組
-          bot.push('Cd2725b9fbeb655b5c81e5c3c8ff0f0e7', outStr);
-          
-      }
-      res.end();
-  }
+            // snk群組
+            bot.push('Ccb9ab77855954cfb99951ac9a86f1d8b', outStr);
+        } else {
+            // 大前端群組
+            bot.push('Ca795cf06d72904a3183f7d00eaacaeb0', outStr);
+            
+            // gapi群組
+            bot.push('Cd2725b9fbeb655b5c81e5c3c8ff0f0e7', outStr);
+        }
+        }
+        res.end();
+    }
 });
 app.listen(process.env.PORT || 3000);
