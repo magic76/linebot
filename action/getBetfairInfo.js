@@ -9,7 +9,7 @@ const getBetfairInfo = (bot, msg = '', currentId) => {
         }
     });
     results.push('https://docs.developer.betfair.com/display/1smk3cen4v3lu3yomq5qye0ni/API+Overview');
-    const message = results.filter(_ => _).join('\\n');
+    const message = results.filter(_ => _).join('\n');
     bot.push(currentId, message);
 }
 
