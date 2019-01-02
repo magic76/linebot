@@ -8,7 +8,7 @@ const getBetfairInfo = (bot, msg = '', currentId) => {
             return `${key}: ${value}`;
         }
     });
-    results.push('https://docs.developer.betfair.com/display/1smk3cen4v3lu3yomq5qye0ni/API+Overview');
+    results.push('https://docs.developer.betfair.com/display/1smk3cen4v3lu3yomq5qye0ni/Betting+Enums');
     const message = results.filter(_ => _).join('\n');
     bot.push(currentId, message);
 }

@@ -33,9 +33,44 @@ module.exports = {
     Using minFillSize is not supported where the time in force of the request (as opposed to an order) is FILL_OR_KILL.`,
 	INVALID_CUSTOMER_ORDER_REF: 'The supplied customer order reference is too long.',
 	INVALID_MIN_FILL_SIZE: `The minFillSize must be greater than zero and less than or equal to the order's size.
-    The minFillSize cannot be less than the minimum bet size for your currency`,
-    SETTLED: 'A matched bet that was settled normally',
-    VOIDED: 'A matched bet that was subsequently voided by Betfair, before, during or after settlement',
-    LAPSED: 'Unmatched bet that was cancelled by Betfair (for example at turn in play).',
-    CANCELLED: 'Unmatched bet that was cancelled by an explicit customer action.'
+	The minFillSize cannot be less than the minimum bet size for your currency`,
+
+	PROCESSED_WITH_ERRORS:
+		'The order itself has been accepted, but at least one (possibly all) actions have generated errors',
+
+	BET_ACTION_ERROR:
+		'There is an error with an action that has caused the entire order to be rejected. Check the instructionReports errorCode for the reason for the rejection of the order.',
+
+	INVALID_ACCOUNT_STATE: `Order rejected due to the account's status (suspended, inactive, dup cards)`,
+
+	INVALID_WALLET_STATUS: `Order rejected due to the account's wallet's status`,
+
+	MARKET_SUSPENDED: 'Market is suspended',
+
+	DUPLICATE_TRANSACTION:
+		'Duplicate customer reference data submitted - Please note: There is a time window associated with the de-duplication of duplicate submissions which is 60 second',
+
+	INVALID_ORDER: `Order cannot be accepted by the matcher due to the combination of actions. For example, bets being edited are not on the same market, or order includes both edits and placement`,
+
+	INVALID_MARKET_ID: `Market doesn't exist`,
+
+	PERMISSION_DENIED: `Business rules do not allow order to be placed. You are either attempting to place the order using a Delayed Application Key or from a restricted jurisdiction (i.e. USA)`,
+
+	DUPLICATE_BETIDS: 'duplicate bet ids found',
+
+	SERVICE_UNAVAILABLE: 'The requested service is unavailable',
+
+	REJECTED_BY_REGULATOR:
+		'The regulator rejected the order. On the Italian Exchange this error will occur if more than 50 bets are sent in a single placeOrders request.',
+
+	NO_CHASING:
+		'A specific error code that relates to Spanish Exchange markets only which indicates that the bet placed contravenes the Spanish regulatory rules relating to loss chasing.',
+	REGULATOR_IS_NOT_AVAILABLE: 'The underlying regulator service is not available.',
+	TOO_MANY_INSTRUCTIONS: 'The amount of orders exceeded the maximum amount allowed to be executed',
+	INVALID_MARKET_VERSION: 'The supplied market version is invalid. Max length allowed for market version is 12.',
+
+	SETTLED: 'A matched bet that was settled normally',
+	VOIDED: 'A matched bet that was subsequently voided by Betfair, before, during or after settlement',
+	LAPSED: 'Unmatched bet that was cancelled by Betfair (for example at turn in play).',
+	CANCELLED: 'Unmatched bet that was cancelled by an explicit customer action.',
 };
