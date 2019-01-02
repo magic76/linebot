@@ -26,7 +26,7 @@ bot.on('message', function (event) {
         } else if (msg.indexOf('init') === 0) {
             return event.reply(`id: ${currentId}`);
         } else if (msg.indexOf('bf=') > -1) {
-            return getBetfairInfo(bot,msg);
+            return getBetfairInfo(bot,msg, currentId);
         } else {
             return getPM2_5(bot, msg, currentId);
         }
