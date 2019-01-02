@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const sister = require('./action/sister');
 const getPM2_5 = require('./action/getPM2_5');
 const getStock = require('./action/getStock');
+const getBetfairInfo = require('./action/getBetfairInfo');
+
 var bot = linebot({
     channelId: '1581950485',
     channelSecret: 'b65b4c323a1350d2c19b1862c1c9e030',
@@ -23,6 +25,8 @@ bot.on('message', function (event) {
            return event.reply('https://www.google.com.tw/search?q=' + msg.replace('?', '').replace('？', ''));
         } else if (msg.indexOf('init') === 0) {
             return event.reply(`id: ${currentId}`);
+        } else if (msg.indexOf('bf=') > -1) {
+            return getBetfairInfo(bot,msg);
         } else {
             return getPM2_5(bot, msg, currentId);
         }
