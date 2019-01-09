@@ -82,7 +82,7 @@ app.post('/gitwebhook', bodyParser.json(), function (req, res) {
       
       if (target.indexOf('master') > -1) {
 
-        if (prUrl.indexOf('snk') > -1) {
+        if (prUrl.indexOf('snk') > -1 || prUrl.indexOf('titan-x') > -1) {
 
             // snk群組
             bot.push('Ccb9ab77855954cfb99951ac9a86f1d8b', outStr);
