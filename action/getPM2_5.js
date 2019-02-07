@@ -16,25 +16,20 @@ const dataPush = (bot, data, msg, currentId) => {
 }
 module.exports = (bot, msg, currentId) => {
     const fileData = require('./pm25.json');
+    console.log(fileData, fileData.time);
     if (Date.now() - fileData.time  < 1000 * 60 * 60) {
-        bot.push(currentId, fileData.time);
         dataPush(bot, fileData, msg, currentId);
     } else {
         fetch('https://pm25.lass-net.org/data/last-all-epa.json').then(data => data.json()).then((data) => {
-            try {
-              // 將最後一筆存到file內
-              data.time = Date.now();
-              fs.writeFileSync('action/pm25.json', JSON.stringify(data));
 
-              dataPush(bot, data, msg, currentId);
-              
-              return ;
-              // return event.reply('end');
-            } catch (e) {
-              bot.push(currentId, e.stack.toString());
-            }
-        
-           
+            // 將最後一筆存到file內
+            data.time = Date.now();
+            fs.writeFileSync('action/pm25.json', JSON.stringify(data));
+            console.log(JSON.stringify(require('./pm25.json')));
+            fs.writeFileSync('pm25.json', JSON.stringify(data));
+            console.log(JSON.stringify(require('./pm25.json')));
+            dataPush(bot, data, msg, currentId)ㄤ
+            return ;
         });
     }
 }
