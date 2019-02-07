@@ -45,6 +45,14 @@ const app = express();
 // app.use(bodyParser.urlencoded({ extended: true }));
 const linebotParser = bot.parser();
 app.post('/linewebhook', linebotParser);
+app.get('/pm25', function (req, res) {
+    const parsedUrl = parse(req.url, true);
+    const query = parsedUrl.query || {};
+    const id = query.id;
+    const msg = query.msg;
+    getPM2_5(bot, msg, id);
+    return res.json({});
+  })
 app.get('/emit_message', function (req, res) {
   const parsedUrl = parse(req.url, true);
   const query = parsedUrl.query || {};
