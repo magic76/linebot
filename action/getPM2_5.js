@@ -28,7 +28,7 @@ module.exports = (bot, msg, currentId) => {
             console.log(JSON.stringify(require('./pm25.json')));
             fs.writeFileSync('pm25.json', JSON.stringify(data));
             console.log(JSON.stringify(require('./pm25.json')));
-            dataPush(bot, data, msg, currentId)ㄤ
+            dataPush(bot, data, msg, currentId);
             return ;
         });
     }
