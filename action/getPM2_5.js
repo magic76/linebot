@@ -15,7 +15,7 @@ const dataPush = (bot, data, msg, currentId) => {
     });
 }
 module.exports = (bot, msg, currentId) => {
-    const fileData = require('action/pm25.json');
+    const fileData = require('./pm25.json');
     if (Date.now() - fileData.time  < 1000 * 60 * 60) {
         bot.push(currentId, fileData.time);
         dataPush(bot, fileData, msg, currentId);
