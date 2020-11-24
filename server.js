@@ -22,11 +22,11 @@ bot.on('message', function (event) {
         } else if (msg.indexOf('$') === 0) {
             return getStock(bot, msg, currentId);
         } else if (msg.indexOf('?') === 0 || msg.indexOf('？') === 0) {
-           return event.reply('https://www.google.com.tw/search?q=' + msg.replace('?', '').replace('？', ''));
+          // return event.reply('https://www.google.com.tw/search?q=' + msg.replace('?', '').replace('？', ''));
         } else if (msg.indexOf('init') === 0) {
             return event.reply(`id: ${currentId}`);
         } else if (msg.indexOf('bf=') > -1) {
-            return getBetfairInfo(bot,msg, currentId);
+          //  return getBetfairInfo(bot,msg, currentId);
         } else {
             return getPM2_5(bot, msg, currentId);
         }
