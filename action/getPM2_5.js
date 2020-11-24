@@ -9,7 +9,7 @@ const dataPush = (bot, data, msg, currentId) => {
       }
     });
     const botMessageList = arr.map(item => {
-      return `${item.County}${item.SiteName} ${item.Status} PM2.5: ${item['PM2.5']} \nPM10: ${item['PM10']} AQI: ${item['AQI']}\n[${item.PublishTime}]`; 
+      return `${item.County}${item.SiteName} ${item.Status} PM2.5: ${item["PM2.5"]} \nPM10: ${item["PM10"]} AQI: ${item["AQI"]}\n[${item.PublishTime}]`; 
     });
     bot.push(currentId, botMessageList.join('\n\n'));
 }
